@@ -8,6 +8,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
 		<PackageReference Include="FluentValidation" Version="10.3.4" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
@@ -24,12 +25,13 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+
 	</ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Events\" />
-    <Folder Include="Application\Queries\" />
-    <Folder Include="Controllers\V1\" />
+    <ProjectReference Include="..\..\building blocks\WebAPI.Core\WebAPI.Core.csproj" />
+    <ProjectReference Include="..\SimpleLogger.Business\SimpleLogger.Business.csproj" />
+    <ProjectReference Include="..\SimpleLogger.Data\SimpleLogger.Data.csproj" />
   </ItemGroup>
 
 </Project>

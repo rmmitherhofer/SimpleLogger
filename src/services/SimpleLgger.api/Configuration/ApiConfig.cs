@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SimpleLogger.api.Data;
+using SimpleLogger.api.Configuration.AutoMapper;
+using SimpleLogger.Data;
 
 namespace SimpleLogger.api.Configuration
 {
@@ -24,6 +25,9 @@ namespace SimpleLogger.api.Configuration
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+
+            services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
+
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
