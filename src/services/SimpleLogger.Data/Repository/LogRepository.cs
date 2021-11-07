@@ -19,8 +19,6 @@ namespace SimpleLogger.Data.Repository
 
         public IUnitOfWork UnitOfWork => _context;
 
-
-
         public async Task<IEnumerable<Log>> GetAll()
         {
             return await _context.Logs

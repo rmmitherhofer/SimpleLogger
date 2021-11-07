@@ -23,7 +23,9 @@ namespace SimpleLogger.Data.Repository
 
         public async Task<IEnumerable<Project>> GetAll()
         {
-            return await _context.Projects.AsNoTracking().ToListAsync();
+            return await _context.Projects
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Project> GetById(Guid id)
@@ -33,11 +35,15 @@ namespace SimpleLogger.Data.Repository
 
         public async Task<Project> GetByName(string name)
         {
-            return await _context.Projects.AsNoTracking().FirstOrDefaultAsync(p => p.Name == name);
+            return await _context.Projects
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Name == name);
         }
         public async Task<Project> GetByType(ProjectType type)
         {
-            return await _context.Projects.AsNoTracking().FirstOrDefaultAsync(p => p.Type == type);
+            return await _context.Projects
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Type == type);
         }
 
         public void Insert(Project project)

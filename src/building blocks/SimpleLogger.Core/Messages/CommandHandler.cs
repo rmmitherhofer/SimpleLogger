@@ -12,9 +12,9 @@ namespace Core.Messages
             ValidationResult = new ValidationResult();
         }
 
-        protected void AddError(string mensagem)
+        protected void AddError(string message)
         {
-            ValidationResult.Errors.Add(new ValidationFailure(string.Empty, mensagem));
+            ValidationResult.Errors.Add(new ValidationFailure(string.Empty, message));
         }
 
         protected async Task<ValidationResult> Commit(IUnitOfWork uow)

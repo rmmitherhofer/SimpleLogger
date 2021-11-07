@@ -38,22 +38,22 @@ namespace SimpleLogger.Business.Model
             Status = StatusLog.Open;
         }
 
-        public void SetClient(Client client)
+        public void Set(Client client)
         {
             Client = client;
         }
 
-        public void SetRequest(Request request)
+        public void Set(Request request)
         {
             Request = request;
         }
 
-        public void SetResponse(Response response)
+        public void Set(Response response)
         {
             Response = response;
         }
 
-        public void SetError(Error error)
+        public void Set(Error error)
         {
             _errors ??= new List<Error>();
             _errors.Add(error);

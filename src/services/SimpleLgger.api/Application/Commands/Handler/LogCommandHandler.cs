@@ -32,13 +32,13 @@ namespace SimpleLogger.api.Application.Commands.Handler
 
             var log = _mapper.Map<Log>(message.Log);
 
-            log.SetClient(_mapper.Map<Client>(message.Log.Client));
-            log.SetRequest(_mapper.Map<Request>(message.Log.Request));
-            log.SetResponse(_mapper.Map<Response>(message.Log.Response));
+            log.Set(_mapper.Map<Client>(message.Log.Client));
+            log.Set(_mapper.Map<Request>(message.Log.Request));
+            log.Set(_mapper.Map<Response>(message.Log.Response));
 
             foreach (var error in _mapper.Map<IEnumerable<Error>>(message.Log.Errors))
             {
-                log.SetError(error);
+                log.Set(error);
             }
 
             log.AddReferences();

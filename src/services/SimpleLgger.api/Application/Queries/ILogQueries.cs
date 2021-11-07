@@ -15,7 +15,7 @@ namespace SimpleLogger.api.Application.Queries
     {
         Task<IEnumerable<LogViewModel>> GetAll();
         Task<LogViewModel> GetById(Guid id);
-        Task<LogViewModel> GetByDate(string name);
+        Task<LogViewModel> GetByDate(DateTime date);
         Task<LogViewModel> GetByProjectName(string name);
         Task<LogViewModel> GetByProjectType(ProjectType type);
     }
@@ -35,14 +35,14 @@ namespace SimpleLogger.api.Application.Queries
             return _mapper.Map<IEnumerable<LogViewModel>>(await _logRepository.GetAll());
         }
 
-        public Task<LogViewModel> GetByDate(string name)
+        public Task<LogViewModel> GetByDate(DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public Task<LogViewModel> GetById(Guid id)
+        public async Task<LogViewModel> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<LogViewModel>(await _logRepository.GetById(id));
         }
 
         public Task<LogViewModel> GetByProjectName(string name)
