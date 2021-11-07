@@ -1,30 +1,37 @@
 ﻿using Core.Messages;
 using FluentValidation;
 using SimpleLogger.Business.Enums;
+using System;
 
 namespace SimpleLogger.api.Application.Commands
 {
-    public class InsertProjectCommand : Command
+    public class UpdateProjectCommand : Command
     {
+        public Guid Id { get; private set; }
         public ProjectType ProjectType { get; private set; }
         public string Name { get; private set; }
 
-        public InsertProjectCommand(ProjectType projectType, string name)
+        public UpdateProjectCommand(Guid id, ProjectType projectType, string name)
         {
+            Id = id;
             ProjectType = projectType;
             Name = name;
         }
 
         public override bool IsValid()
         {
-            ValidationResult = new InsertProjectValidation().Validate(this);
+            ValidationResult = new UpdateProjectValidation().Validate(this);
             return ValidationResult.IsValid;
         }
 
-        public class InsertProjectValidation : AbstractValidator<InsertProjectCommand>
+        public class UpdateProjectValidation : AbstractValidator<UpdateProjectCommand>
         {
-            public InsertProjectValidation()
+            public UpdateProjectValidation()
             {
+                RuleFor(p => p.Id)
+                    .NotEqual(Guid.Empty)
+                    .WithMessage("O id do projeto não foi informado");
+
                 RuleFor(p => p.ProjectType)
                     .NotEmpty()
                     .WithMessage("O tipo de projeto não foi informado");

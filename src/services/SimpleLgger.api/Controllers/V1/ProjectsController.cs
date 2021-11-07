@@ -73,7 +73,7 @@ namespace SimpleLogger.api.Controllers.V1
                 CustomResponse();
             }
 
-            //var result = await _mediatorHandler.Send(new InsertProjectCommand(project.Type, project.Name));
+            var result = await _mediatorHandler.Send(new InsertProjectCommand(project.Type, project.Name));
 
             return CustomResponse();
         }

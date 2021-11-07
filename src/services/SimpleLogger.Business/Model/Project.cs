@@ -18,5 +18,11 @@ namespace SimpleLogger.Business.Model
             Type = type;
             Name = name;
         }
+
+        public void Update(ProjectType type, string name)
+        {
+            Type = type;
+            Name = name;
+        }
     }
 }

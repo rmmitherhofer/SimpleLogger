@@ -18,17 +18,20 @@ namespace SimpleLogger.api.Configuration
             services.AddScoped<IMediatorHandler, MediatorHandler>();
 
             services.AddScoped<IRequestHandler<InsertLogCommand, ValidationResult>, LogCommandHandler>();
-            services.AddScoped<IRequestHandler<InsertProjectCommand, ValidationResult>, ProjectCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateLogCommand, ValidationResult>, LogCommandHandler>();
+            services.AddScoped<IRequestHandler<RemoveLogCommand, ValidationResult>, LogCommandHandler>();
 
+            services.AddScoped<IRequestHandler<InsertProjectCommand, ValidationResult>, ProjectCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateProjectCommand, ValidationResult>, ProjectCommandHandler>();
+            services.AddScoped<IRequestHandler<RemoveProjectCommand, ValidationResult>, ProjectCommandHandler>();
 
             services.AddScoped<IProjectQueries, ProjectQueries>();
             services.AddScoped<ILogQueries, LogQueries>();
 
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
-            services.AddScoped<LoggerContext>();
 
-            //services.AddHostedService<RegistroClienteIntegrationHandler>();
+            services.AddScoped<LoggerContext>();
         }
     }
 }

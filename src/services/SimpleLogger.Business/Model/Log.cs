@@ -13,6 +13,7 @@ namespace SimpleLogger.Business.Model
         public string Type { get; private set; }
         public double TimeProcess { get; private set; }
         public DateTime RegisterDate { get; private set; }
+        public StatusLog Status { get; private set; }
         public Guid ProjectId { get; private set; }
 
         public Client Client { get; private set; }
@@ -34,6 +35,7 @@ namespace SimpleLogger.Business.Model
             ProjectId = projectId;
             Level = level;
             Type = type;
+            Status = StatusLog.Open;
         }
 
         public void SetClient(Client client)
@@ -55,6 +57,11 @@ namespace SimpleLogger.Business.Model
         {
             _errors ??= new List<Error>();
             _errors.Add(error);
+        }
+
+        public void UpdateStatus(StatusLog status)
+        {
+            Status = status;
         }
 
         public void AddReferences()

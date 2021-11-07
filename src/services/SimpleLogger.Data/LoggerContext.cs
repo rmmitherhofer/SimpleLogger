@@ -1,4 +1,6 @@
-﻿using Core.Messages;
+﻿using Core.DomainObjects;
+using Core.Mediator;
+using Core.Messages;
 using Core.Repository;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +13,12 @@ namespace SimpleLogger.Data
 {
     public class LoggerContext : DbContext, IUnitOfWork
     {
-        public LoggerContext(DbContextOptions<LoggerContext> options) : base(options)
+        private readonly IMediatorHandler _mediatorHandler;
+        public LoggerContext(DbContextOptions<LoggerContext> options, IMediatorHandler mediatorHandler) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
+            _mediatorHandler = mediatorHandler;
         }
 
         public DbSet<Project> Projects { get; set; }
@@ -52,9 +56,32 @@ namespace SimpleLogger.Data
 
             if (success)
                 Console.WriteLine(this);
-                //await _mediatorHandler.PublicarEventos(this);
+                await _mediatorHandler.PublishEvents(this);
 
             return success;
+        }
+    }
+
+    public static class MediatorExtension
+    {
+        public static async Task PublishEvents<T>(this IMediatorHandler mediator, T context) where T : DbContext
+        {
+            var domainEntities = context.ChangeTracker
+                .Entries<Entity>()
+                .Where(x => x.Entity.Notifications?.Any() == true);
+
+            var domainEvents = domainEntities
+                .SelectMany(x => x.Entity.Notifications)
+                .ToList();
+
+            domainEntities
+                .ToList()
+                .ForEach(entity => entity.Entity.ClearEvents());
+
+            var tasks = domainEvents
+                .Select(async (domainEvents) => await mediator.Publish(domainEvents));
+
+            await Task.WhenAll(tasks);
         }
     }
 }

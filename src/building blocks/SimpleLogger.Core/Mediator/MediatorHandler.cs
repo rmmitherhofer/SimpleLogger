@@ -14,14 +14,14 @@ namespace Core.Mediator
             _mediator = mediator;
         }
 
-        public async Task Publish<T>(T even) where T : Event
-        {
-            await _mediator.Publish(even);
-        }
-
         public async Task<ValidationResult> Send<T>(T command) where T : Command
         {
             return await _mediator.Send(command);
+        }
+
+        public async Task Publish<T>(T eventItem) where T : Event
+        {
+            await _mediator.Publish(eventItem);
         }
     }
 }
